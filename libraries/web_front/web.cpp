@@ -58,15 +58,7 @@ void website(int16_t accelX, int16_t accelY, int16_t accelZ) {
       client.println("Content-Type: application/json");
       client.println("Connection: close");
       client.println();
-      client.print("{\"accelX\":");
-      client.print(accelX);
-      client.print(",\"accelY\":");
-      client.print(accelY);
-      client.print(",\"accelZ\":");
-      client.print(accelZ);
-      client.print(",\"magnitude\":");
-      client.print(accel_mag(accelX, accelY, accelZ));
-      client.print(",\"steps\":");
+      client.print("{\"steps\":");
       client.print(detect_steps(accelX, accelY, accelZ));
       client.println("}");
     } else { // Serve the main HTML page
@@ -77,31 +69,43 @@ void website(int16_t accelX, int16_t accelY, int16_t accelZ) {
       client.println("<!DOCTYPE HTML>");
       client.println("<html>");
       client.println("<head>");
-      client.println("<title>MPU6050 Sensor Data</title>");
+      client.println("<title>Step Counter</title>");
+      client.println("<style>");
+      client.println("body {");
+      client.println("  font-family: Arial, sans-serif;");
+      client.println("  text-align: center;");
+      client.println("  background-color: #f4f4f9;");
+      client.println("  color: #333;");
+      client.println("  margin: 0;");
+      client.println("  padding: 0;");
+      client.println("}");
+      client.println("h1 {");
+      client.println("  background-color: #4CAF50;");
+      client.println("  color: white;");
+      client.println("  padding: 20px;");
+      client.println("  margin: 0;");
+      client.println("}");
+      client.println("#stepCount {");
+      client.println("  font-size: 48px;");
+      client.println("  margin-top: 50px;");
+      client.println("}");
+      client.println("</style>");
       client.println("<script>");
       client.println("function fetchData() {");
       client.println("  fetch('/data').then(response => response.json()).then(data => {");
-      client.println("    document.getElementById('accelX').innerText = data.accelX;");
-      client.println("    document.getElementById('accelY').innerText = data.accelY;");
-      client.println("    document.getElementById('accelZ').innerText = data.accelZ;");
-      client.println("    document.getElementById('magnitude').innerText = data.magnitude;");
-      client.println("    document.getElementById('steps').innerText = data.steps;");
+      client.println("    document.getElementById('stepCount').innerText = data.steps;");
       client.println("  });");
       client.println("}");
       client.println("setInterval(fetchData, 5000);"); // Fetch data every 5 seconds
       client.println("</script>");
       client.println("</head>");
       client.println("<body onload='fetchData()'>");
-      client.println("<h1>MPU6050 Sensor Data</h1>");
-      client.println("<p><strong>Accelerometer Data:</strong></p>");
-      client.println("<p>Accel X: <span id='accelX'>0</span> m/s²</p>");
-      client.println("<p>Accel Y: <span id='accelY'>0</span> m/s²</p>");
-      client.println("<p>Accel Z: <span id='accelZ'>0</span> m/s²</p>");
-      client.println("<p>Acceleration Magnitude: <span id='magnitude'>0</span> g</p>");
-      client.println("<p>Step Count: <span id='steps'>0</span></p>");
+      client.println("<h1>Step Counter</h1>");
+      client.println("<div id='stepCount'>0</div>");
       client.println("</body>");
       client.println("</html>");
     }
     client.stop();
   }
 }
+
