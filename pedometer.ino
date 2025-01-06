@@ -1,4 +1,5 @@
 //MPU6050 i2c communication using wire.h library with arduino uno
+
 #include "Wire.h"
 
 //wifi for esp32
@@ -6,6 +7,9 @@
 
 #include "i2c_comm.h"
 #include "web.h"
+
+
+
 
 /*--------------------------------------------------------------- Define Addresses ---------------------------------------------- */
 //from the ivensense mpu6050 product specifications, i2c address is 1101000
@@ -42,6 +46,8 @@
 #define scl 22
 #define sda 21
 
+
+
 /*--------------------------------------------------------- Initialization --------------------------------------------------------*/
 
 void setup(){
@@ -61,8 +67,11 @@ void setup(){
   // + gyroscope by setting 3rd and 4th bit to 0 (0x00 --> 0x00)
   write_mpu (gyro_config, 0x00);
   Serial.println("MPU6050 has been initialized!!");
+
   //Connect to wifi and initialize server
   wifi_init();
+
+
 }
 
 /*--------------------------------------------------------- Read and Print Data --------------------------------------------------------*/
@@ -87,9 +96,15 @@ void loop() {
   Serial.print(",");
   Serial.println(steps);
 
-  delay(1000);  // Wait 1 second
+
+
+
+  delay(500);  // Wait 1 second
 
   website(accelX, accelY, accelZ);
+
+
+
 
 
 }
