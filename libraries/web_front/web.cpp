@@ -6,8 +6,8 @@ WiFiServer server(80);
 //-------------------------------------wifi intialization + server initalization------------------------//
 void wifi_init (){
   // wifi credentials
-  char ssid[] = "Bell855";
-  char pass[] = "D2F9929F";
+  char ssid[];
+  char pass[];
   //initialize wifi using credentials
   WiFi.begin(ssid, pass);
   //wait until esp32 succesfully connects to wifi
